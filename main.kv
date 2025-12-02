@@ -3,26 +3,26 @@
         size_hint: None, None
 
     DPEAButton:
-        id: test_button_1
-        text: "Hello"
+        id: auto_move
+        text: "Start"
         size: 200, 200
         x: root.width * 0.4
         y: root.height * 0.5
         text_color: 1, 1, 1, 1
         fill_color: 1, 0, 0, 1
         border_radius: root.height/2
-        fill_radius: root.height/2
         font_size: 30
-        on_press: root.pressed()
+        bold: True
+        on_press: root.move_arm()
 
     DPEAButton:
-        id: test_button_2
-        text: 'World'
-        size: 100, 200
+        id: manual_move
+        text: 'Raise Arm'
+        size: 200, 150
         x: root.width * 0.6
         y: root.height * 0.5
         text_color: 1, 1, 1, 1
-        fill_color: 0, 0, 1, 1
-        font_size: 20
+        fill_color: "turquoise"
+        font_size: 30
         bold: True
         on_press: root.pressed()
