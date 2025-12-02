@@ -13,9 +13,10 @@ from time import sleep
 dpiComputer = DPiComputer()
 dpiStepper = DPiStepper()
 
-#labelling sensors to make life easier
+#labelling things to make life easier
 low_pos = dpiComputer.IN_CONNECTOR__IN_0
 high_pos = dpiComputer.IN_CONNECTOR__IN_1
+stepper_num = 0
 
 #for servos, 90 is off, 180 is on
 magnet_servo = 0
@@ -37,9 +38,9 @@ class Machine:
     def halt(self):
         #TODO: Implement halt functionality
         dpiStepper.enableMotors(False)
-        dpiComputer.writeServo(1, 0)
-        dpiComputer.writeServo(0, 90)
-        dpiStepper.moveToAbsolutePositionInRevolutions(0, 0, True)
+        dpiComputer.writeServo(piston_servo, 0)
+        dpiComputer.writeServo(magnet_servo, 90)
+        dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, 0, True)
 
     def stepper_startup(self):
         dpiStepper.enableMotors(True)
@@ -47,28 +48,32 @@ class Machine:
         dpiStepper.setMicrostepping(microstepping)
         speed_steps_per_second = 400 * microstepping
         accel_steps_per_second_per_second = speed_steps_per_second
-        dpiStepper.setSpeedInStepsPerSecond(0, speed_steps_per_second)
-        dpiStepper.setAccelerationInStepsPerSecondPerSecond(0, accel_steps_per_second_per_second)
-        stepperStatus = dpiStepper.getStepperStatus(0)
+        dpiStepper.setSpeedInStepsPerSecond(stepper_num, speed_steps_per_second)
+        dpiStepper.setAccelerationInStepsPerSecondPerSecond(stepper_num, accel_steps_per_second_per_second)
+        stepperStatus = dpiStepper.getStepperStatus(stepper_num)
         print(f"Pos = {stepperStatus}")
 
         dpiStepper.moveToHomeInSteps(0, 1, 1600,
                                      32000)
-        dpiStepper.setCurrentPositionInSteps(0, 0)
-        dpiStepper.setSpeedInRevolutionsPerSecond(0, 3)
+        dpiStepper.setCurrentPositionInSteps(stepper_num, 0)
+        dpiStepper.setSpeedInRevolutionsPerSecond(stepper_num, 3)
 
     def auto_move(self):
+        self.default_position()
         if dpiComputer.readDigitalIn(low_pos):
-            pass
+            dpiStepper.moveToAbsolutePositionInRevolutions(0, 0, True)
         elif dpiComputer.readDigitalIn(high_pos):
             pass
 
     def manual_move(self):
+        pass
 
-
+    def default_position(self):
+        dpiComputer.writeServo(piston_servo, 90)
+        dpiComputer.writeServo(magnet_servo, 90)
 
     def startup(self):
         #TODO: Implement startup functionality
         self.stepper_startup()
-        dpiComputer.writeServo(1, 0)
-        dpiComputer.writeServo(0, 90)
+        dpiComputer.writeServo(magnet_servo, 90)
+        dpiComputer.writeServo(piston_servo, 90)
