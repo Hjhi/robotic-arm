@@ -38,7 +38,7 @@ class Machine:
     def halt(self):
         #TODO: Implement halt functionality
         dpiStepper.enableMotors(False)
-        dpiComputer.writeServo(piston_servo, 0)
+        dpiComputer.writeServo(piston_servo, 90)
         dpiComputer.writeServo(magnet_servo, 90)
         dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, 0, True)
 
