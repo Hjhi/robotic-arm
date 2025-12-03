@@ -5,12 +5,13 @@ from time import sleep
 
 from Machine import *
 
-
 class MainScreen(Screen):
     """
     Class to handle the main screen and its associated touch events
     in other words, the frontend (grr)
     """
+    start_button_called = False
+    manual_button_call = False
 
     def __init__(self, machine: Machine, **kwargs):
         super(MainScreen, self).__init__(**kwargs)
@@ -27,7 +28,8 @@ class MainScreen(Screen):
         Clock.unschedule(self.update)
 
     def update(self, dt=None):
-        print('updating main screen')
+        if self.start_button_called:
+            self.ids.auto_move.fill_color = "dimgray"
 
     def pressed(self):
         """
@@ -38,7 +40,9 @@ class MainScreen(Screen):
         print("Button pressed!")
 
     def start_button(self):
+        self.start_button_called = True
         Machine.auto_move(self.machine)
+        self.start_button_called = False
 
     def admin_action(self):
         """
