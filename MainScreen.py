@@ -3,7 +3,7 @@ from kivy.uix.screenmanager import Screen
 
 from time import sleep
 
-from Machine import Machine
+from Machine import *
 
 
 class MainScreen(Screen):
@@ -36,6 +36,9 @@ class MainScreen(Screen):
         :return: None
         """
         print("Button pressed!")
+
+    def start_button(self):
+        Machine.auto_move(self.machine)
 
     def admin_action(self):
         """

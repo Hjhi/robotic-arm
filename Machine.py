@@ -61,7 +61,7 @@ class Machine:
     def auto_move(self):
         self.default_position()
         if dpiComputer.readDigitalIn(low_pos):
-            dpiStepper.moveToAbsolutePositionInRevolutions(0, 0, True)
+            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, 0.25, True)
         elif dpiComputer.readDigitalIn(high_pos):
             pass
 
