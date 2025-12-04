@@ -40,11 +40,13 @@ class MainScreen(Screen):
 
     def manual_button(self):
         self.manual_button_called = True
+        self.update()
         self.machine.manual_move()
         self.manual_button_called = False
 
     def start_button(self):
         self.start_button_called = True
+        self.update()
         self.machine.auto_move()
         self.start_button_called = False
 

@@ -31,6 +31,9 @@ piston_servo = 1
 
 
 class Machine:
+
+    piston_high = True
+
     def __init__(self, **kwargs):
         #TODO: Initialize your hardware interfaces here
         dpiStepper.setBoardNumber(0)
@@ -62,8 +65,23 @@ class Machine:
         self.default_position()
         if dpiComputer.readDigitalIn(low_pos):
             dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, 0.5, True)
+            dpiComputer.writeServo(piston_servo, 170) #lower piston
+            dpiComputer.writeServo(magnet_servo, 180)
+            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, 0.75, True)
+            dpiComputer.writeServo(piston_servo, 90) #raise piston
+            dpiComputer.writeServo(magnet_servo, 90)
+
+            self.piston_high = True
+
         elif dpiComputer.readDigitalIn(high_pos):
-            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, 1, True)
+            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, 0.75, True)
+            dpiComputer.writeServo(piston_servo, 90) #raise piston
+            dpiComputer.writeServo(magnet_servo, 180)
+            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, 0.5, True)
+            dpiComputer.writeServo(piston_servo, 170) #lower piston
+            dpiComputer.writeServo(magnet_servo, 90)
+
+            self.piston_high = False
 
     def manual_move(self):
         dpiComputer.writeServo(piston_servo, 180)
@@ -71,6 +89,7 @@ class Machine:
     def default_position(self):
         dpiComputer.writeServo(piston_servo, 90)
         dpiComputer.writeServo(magnet_servo, 90)
+        self.piston_high = True
 
     def startup(self):
         #TODO: Implement startup functionality
