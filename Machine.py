@@ -61,12 +61,12 @@ class Machine:
     def auto_move(self):
         self.default_position()
         if dpiComputer.readDigitalIn(low_pos):
-            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, 0.25, True)
+            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, 0.5, True)
         elif dpiComputer.readDigitalIn(high_pos):
-            pass
+            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, 1, True)
 
     def manual_move(self):
-        pass
+        dpiComputer.writeServo(piston_servo, 180)
 
     def default_position(self):
         dpiComputer.writeServo(piston_servo, 90)

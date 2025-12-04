@@ -3,7 +3,7 @@ from kivy.uix.screenmanager import Screen
 
 from time import sleep
 
-from Machine import *
+from Machine import Machine
 
 class MainScreen(Screen):
     """
@@ -11,7 +11,7 @@ class MainScreen(Screen):
     in other words, the frontend (grr)
     """
     start_button_called = False
-    manual_button_call = False
+    manual_button_called = False
 
     def __init__(self, machine: Machine, **kwargs):
         super(MainScreen, self).__init__(**kwargs)
@@ -30,18 +30,22 @@ class MainScreen(Screen):
     def update(self, dt=None):
         if self.start_button_called:
             self.ids.auto_move.fill_color = "dimgray"
+        else:
+            self.ids.auto_move.fill_color = "turquoise"
+
+        if self.manual_button_called:
+            self.ids.manual_move.fill_color = "dimgray"
+        else:
+            self.ids.manual_move.fill_color = "turquoise"
 
     def manual_button(self):
-        """
-        Example button touch event method
-        This method is called from main.kv
-        :return: None
-        """
-        print("Button pressed!")
+        self.manual_button_called = True
+        self.machine.manual_move()
+        self.manual_button_called = False
 
     def start_button(self):
         self.start_button_called = True
-        Machine.auto_move(self.Machine)
+        self.machine.auto_move()
         self.start_button_called = False
 
     def admin_action(self):
