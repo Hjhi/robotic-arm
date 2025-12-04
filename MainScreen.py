@@ -10,8 +10,7 @@ class MainScreen(Screen):
     Class to handle the main screen and its associated touch events
     in other words, the frontend (grr)
     """
-    start_button_called = False
-    manual_button_called = False
+    button_called = False
 
     def __init__(self, machine: Machine, **kwargs):
         super(MainScreen, self).__init__(**kwargs)
@@ -30,25 +29,22 @@ class MainScreen(Screen):
     def update(self, dt=None):
         if self.start_button_called:
             self.ids.auto_move.fill_color = "dimgray"
-        else:
-            self.ids.auto_move.fill_color = "turquoise"
-
-        if self.manual_button_called:
             self.ids.manual_move.fill_color = "dimgray"
         else:
+            self.ids.auto_move.fill_color = "turquoise"
             self.ids.manual_move.fill_color = "turquoise"
 
     def manual_button(self):
-        self.manual_button_called = True
+        self.button_called = True
         self.update()
         self.machine.manual_move()
-        self.manual_button_called = False
+        self.button_called = False
 
     def start_button(self):
-        self.start_button_called = True
+        self.button_called = True
         self.update()
         self.machine.auto_move()
-        self.start_button_called = False
+        self.button_called = False
 
     def admin_action(self):
         """

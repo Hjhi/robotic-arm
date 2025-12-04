@@ -67,14 +67,14 @@ class Machine:
             dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, 0.5, True)
             dpiComputer.writeServo(piston_servo, 170) #lower piston
             dpiComputer.writeServo(magnet_servo, 180)
-            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, 0.75, True)
+            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, 0.9, True)
             dpiComputer.writeServo(piston_servo, 90) #raise piston
             dpiComputer.writeServo(magnet_servo, 90)
 
             self.piston_high = True
 
         elif dpiComputer.readDigitalIn(high_pos):
-            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, 0.75, True)
+            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, 0.9, True)
             dpiComputer.writeServo(piston_servo, 90) #raise piston
             dpiComputer.writeServo(magnet_servo, 180)
             dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, 0.5, True)
