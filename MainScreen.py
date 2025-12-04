@@ -27,7 +27,7 @@ class MainScreen(Screen):
         Clock.unschedule(self.update)
 
     def update(self, dt=None):
-        if self.start_button_called:
+        if self.button_called:
             self.ids.auto_move.fill_color = "dimgray"
             self.ids.manual_move.fill_color = "dimgray"
         else:
