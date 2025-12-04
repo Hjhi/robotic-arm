@@ -31,7 +31,7 @@ class MainScreen(Screen):
         if self.start_button_called:
             self.ids.auto_move.fill_color = "dimgray"
 
-    def pressed(self):
+    def manual_button(self):
         """
         Example button touch event method
         This method is called from main.kv
@@ -41,7 +41,7 @@ class MainScreen(Screen):
 
     def start_button(self):
         self.start_button_called = True
-        Machine.auto_move(self.machine)
+        Machine.auto_move(self.Machine)
         self.start_button_called = False
 
     def admin_action(self):
