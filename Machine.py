@@ -67,13 +67,13 @@ class Machine:
     def auto_move(self):
         self.default_position()
         if dpiComputer.readDigitalIn(low_pos):
-            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, 0.55, True)
+            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, 0.45, True)
             dpiComputer.writeServo(piston_servo, 165) #lower piston
             dpiComputer.writeServo(magnet_servo, 180)
             sleep(0.1)
             dpiComputer.writeServo(piston_servo, 90) #raise piston
             dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, 0.9, True)
-            dpiComputer.writeServo(piston_servo, 95) #lower slightly
+            dpiComputer.writeServo(piston_servo, 95) #lower
             sleep(0.1)
             dpiComputer.writeServo(magnet_servo, 90)
 
@@ -81,11 +81,11 @@ class Machine:
 
         elif dpiComputer.readDigitalIn(high_pos):
             dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, 0.9, True)
-            dpiComputer.writeServo(piston_servo, 95) #lower piston slightly
+            dpiComputer.writeServo(piston_servo, 100) #lower piston slightly
             dpiComputer.writeServo(magnet_servo, 180)
             sleep(0.1)
             dpiComputer.writeServo(piston_servo, 90)
-            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, 0.55, True)
+            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, 0.45, True)
             dpiComputer.writeServo(piston_servo, 165) #lower piston
             sleep(0.1)
             dpiComputer.writeServo(magnet_servo, 90)
