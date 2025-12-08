@@ -19,8 +19,8 @@ high_pos = dpiComputer.IN_CONNECTOR__IN_1
 stepper_num = 0
 
 #for servos, 90 is off, 180 is on
-magnet_servo = 0
-piston_servo = 1
+magnet_servo = 1
+piston_servo = 0
 arm_high = 90
 arm_low = 180
 
