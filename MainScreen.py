@@ -37,15 +37,17 @@ class MainScreen(Screen):
     def manual_button(self):
         self.button_called = True
         self.update()
+        sleep(0.05)
         self.machine.manual_move()
-        sleep(2)
+        sleep(1)
         self.button_called = False
 
     def start_button(self):
         self.button_called = True
         self.update()
+        sleep(0.05)
         self.machine.auto_move()
-        sleep(2)
+        sleep(1)
         self.button_called = False
 
     def admin_action(self):

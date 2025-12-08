@@ -22,7 +22,7 @@ stepper_num = 0
 magnet_servo = 0
 piston_servo = 1
 arm_high = 90
-arm_low = 170
+arm_low = 180
 
 #
 # TODO: Replace the placeholders above with your project's actual
