@@ -28,9 +28,13 @@ class MainScreen(Screen):
 
     def update(self, dt=None):
         if self.button_called:
+            self.ids.auto_move.disabled = True
+            self.ids.manual_move.disabled = True
             self.ids.auto_move.fill_color = "dimgray"
             self.ids.manual_move.fill_color = "dimgray"
         else:
+            self.ids.auto_move.disabled = False
+            self.ids.manual_move.disabled = False
             self.ids.auto_move.fill_color = "turquoise"
             self.ids.manual_move.fill_color = "turquoise"
 

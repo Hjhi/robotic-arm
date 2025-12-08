@@ -9,6 +9,7 @@
 from dpeaDPi.DPiComputer import DPiComputer
 from dpeaDPi.DPiStepper import *
 from time import sleep
+from kivy.clock import Clock
 
 dpiComputer = DPiComputer()
 dpiStepper = DPiStepper()
@@ -22,7 +23,7 @@ stepper_num = 0
 magnet_servo = 1
 piston_servo = 0
 arm_high = 90
-arm_low = 180
+arm_low = 170
 
 #
 # TODO: Replace the placeholders above with your project's actual
@@ -66,21 +67,27 @@ class Machine:
     def auto_move(self):
         self.default_position()
         if dpiComputer.readDigitalIn(low_pos):
-            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, 0.5, True)
-            dpiComputer.writeServo(piston_servo, 170) #lower piston
+            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, 0.55, True)
+            dpiComputer.writeServo(piston_servo, 165) #lower piston
             dpiComputer.writeServo(magnet_servo, 180)
-            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, 0.9, True)
+            sleep(0.1)
             dpiComputer.writeServo(piston_servo, 90) #raise piston
+            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, 0.9, True)
+            dpiComputer.writeServo(piston_servo, 95) #lower slightly
+            sleep(0.1)
             dpiComputer.writeServo(magnet_servo, 90)
 
             self.piston_high = True
 
         elif dpiComputer.readDigitalIn(high_pos):
             dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, 0.9, True)
-            dpiComputer.writeServo(piston_servo, 90) #raise piston
+            dpiComputer.writeServo(piston_servo, 95) #lower piston slightly
             dpiComputer.writeServo(magnet_servo, 180)
-            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, 0.5, True)
-            dpiComputer.writeServo(piston_servo, 170) #lower piston
+            sleep(0.1)
+            dpiComputer.writeServo(piston_servo, 90)
+            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, 0.55, True)
+            dpiComputer.writeServo(piston_servo, 165) #lower piston
+            sleep(0.1)
             dpiComputer.writeServo(magnet_servo, 90)
 
             self.piston_high = False
