@@ -38,12 +38,14 @@ class MainScreen(Screen):
         self.button_called = True
         self.update()
         self.machine.manual_move()
+        sleep(2)
         self.button_called = False
 
     def start_button(self):
         self.button_called = True
         self.update()
         self.machine.auto_move()
+        sleep(2)
         self.button_called = False
 
     def admin_action(self):

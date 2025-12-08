@@ -21,6 +21,8 @@ stepper_num = 0
 #for servos, 90 is off, 180 is on
 magnet_servo = 0
 piston_servo = 1
+arm_high = 90
+arm_low = 170
 
 #
 # TODO: Replace the placeholders above with your project's actual
@@ -84,7 +86,12 @@ class Machine:
             self.piston_high = False
 
     def manual_move(self):
-        dpiComputer.writeServo(piston_servo, 180)
+        if self.piston_high:
+            dpiComputer.writeServo(piston_servo, arm_low)
+            self.piston_high = False
+        else:
+            dpiComputer.writeServo(piston_servo, arm_high)
+            self.piston_high = True
 
     def default_position(self):
         dpiComputer.writeServo(piston_servo, 90)
