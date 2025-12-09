@@ -24,7 +24,7 @@ magnet_servo = 1
 piston_servo = 0
 arm_high = 90
 arm_low = 180
-arm_low_revs = 0.6
+arm_low_revs = 0.5
 arm_high_revs = 0.95
 
 #
@@ -68,7 +68,7 @@ class Machine:
 
     def auto_move(self):
         self.default_position()
-        if not dpiComputer.readDigitalIn(high_pos):
+        if dpiComputer.readDigitalIn(high_pos):
             dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_high_revs, True)
             dpiComputer.writeServo(piston_servo, 100) #lower piston slightly
             dpiComputer.writeServo(magnet_servo, 180) #magnet on
@@ -83,7 +83,7 @@ class Machine:
 
             self.piston_high = False
 
-        elif not dpiComputer.readDigitalIn(low_pos):
+        elif dpiComputer.readDigitalIn(low_pos):
             dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_low_revs, True)
             dpiComputer.writeServo(piston_servo, arm_low)  # lower piston
             sleep(3)
@@ -105,6 +105,12 @@ class Machine:
         else:
             dpiComputer.writeServo(piston_servo, arm_high)
             self.piston_high = True
+
+    def manual_rotate(self):
+        if dpiStepper.getCurrentPositionInRevolutions(stepper_num) == arm_high_revs:
+            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_low_revs, True)
+        else:
+            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_high_revs, True)
 
     def default_position(self):
         dpiComputer.writeServo(piston_servo, 90)

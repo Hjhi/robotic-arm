@@ -25,3 +25,15 @@
         font_size: 30
         bold: True
         on_press: root.manual_button()
+
+        DPEAButton:
+        id: rotate
+        text: 'Rotate arm'
+        size: 200, 150
+        center_x: root.width * 0.5
+        center_y: root.height * 0.3
+        text_color: 1, 1, 1, 1
+        fill_color: "turquoise"
+        font_size: 30
+        bold: True
+        on_press: root.manual_rotate_button()

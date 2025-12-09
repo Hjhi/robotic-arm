@@ -11,6 +11,7 @@ class MainScreen(Screen):
     in other words, the frontend (grr)
     """
     button_called = False
+    rotated_up = False
 
     def __init__(self, machine: Machine, **kwargs):
         super(MainScreen, self).__init__(**kwargs)
@@ -57,6 +58,15 @@ class MainScreen(Screen):
         self.machine.auto_move()
         sleep(1)
         self.button_called = False
+
+    def manual_rotate_button(self):
+        rotated_up = self.machine.dpiStepper.getCurrentPositionInRevolutions(0) == 0.95
+        if rotated_up:
+            self.ids.manual_rotate_button.text = "rotate down"
+        else:
+            self.ids.manual_rotate_button.text = "rotate up"
+        self.machine.manual_rotate()
+
 
     def admin_action(self):
         """
