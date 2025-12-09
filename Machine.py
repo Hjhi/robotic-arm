@@ -24,8 +24,8 @@ magnet_servo = 1
 piston_servo = 0
 arm_high = 90
 arm_low = 170
-arm_low_revs = 0.45
-arm_high_revs = 0.7
+arm_low_revs = 0.5
+arm_high_revs = 0.9
 
 #
 # TODO: Replace the placeholders above with your project's actual
