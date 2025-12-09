@@ -25,7 +25,7 @@ piston_servo = 0
 arm_high = 90
 arm_low = 170
 arm_low_revs = 0.45
-arm_high_revs = 0.85
+arm_high_revs = 0.7
 
 #
 # TODO: Replace the placeholders above with your project's actual
@@ -71,29 +71,30 @@ class Machine:
         if dpiComputer.readDigitalIn(high_pos):
             dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_high_revs, True)
             dpiComputer.writeServo(piston_servo, 100) #lower piston slightly
-            dpiComputer.writeServo(magnet_servo, 180)
+            dpiComputer.writeServo(magnet_servo, 180) #magnet on
             sleep(1)
             dpiComputer.writeServo(piston_servo, 90) #raise piston
             dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_low_revs, True)
-            dpiComputer.writeServo(magnet_servo, 165)
+            dpiComputer.writeServo(piston_servo, 180)  #lower piston
+            dpiComputer.writeServo(magnet_servo, 90) #magnet off
+            sleep(1)
+            dpiComputer.writeServo(piston_servo, 90)  # raise piston
+
+            self.piston_high = False
+
+        elif dpiComputer.readDigitalIn(low_pos):
+            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_low_revs, True)
+            dpiComputer.writeServo(piston_servo, 180)  # lower piston
+            dpiComputer.writeServo(magnet_servo, 180)  # magnet on
+            sleep(1)
+            dpiComputer.writeServo(piston_servo, 90)  # raise piston
+            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_high_revs, True)
+            dpiComputer.writeServo(piston_servo, 100)  # slightly lower piston
+            dpiComputer.writeServo(magnet_servo, 90)  # magnet off
             sleep(1)
             dpiComputer.writeServo(piston_servo, 90)  # raise piston
 
             self.piston_high = True
-
-        elif dpiComputer.readDigitalIn(low_pos):
-            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_low_revs, True)
-            dpiComputer.writeServo(piston_servo, 165) #lower piston
-            dpiComputer.writeServo(magnet_servo, 180)
-            sleep(1)
-            dpiComputer.writeServo(piston_servo, 90)
-            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_high_revs, True)
-            dpiComputer.writeServo(piston_servo, 100) #lower piston slightly
-            dpiComputer.writeServo(magnet_servo, 90)
-            sleep(1)
-            dpiComputer.writeServo(piston_servo, 90)
-
-            self.piston_high = False
 
     def manual_move(self):
         if self.piston_high:
