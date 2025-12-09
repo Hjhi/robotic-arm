@@ -62,9 +62,9 @@ class MainScreen(Screen):
     def manual_rotate_button(self):
         rotated_up = self.machine.dpiStepper.getCurrentPositionInRevolutions(0) == 0.95
         if rotated_up:
-            self.ids.manual_rotate_button.text = "rotate down"
+            self.ids.rotate.text = "rotate down"
         else:
-            self.ids.manual_rotate_button.text = "rotate up"
+            self.ids.rotate.text = "rotate up"
         self.machine.manual_rotate()
 
 

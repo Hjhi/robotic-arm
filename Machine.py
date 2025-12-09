@@ -61,8 +61,7 @@ class Machine:
         stepperStatus = dpiStepper.getStepperStatus(stepper_num)
         print(f"Pos = {stepperStatus}")
 
-        dpiStepper.moveToHomeInSteps(0, 1, 1600,
-                                     32000)
+        dpiStepper.moveToHomeInSteps(0, 1, 1600, 32000)
         dpiStepper.setCurrentPositionInSteps(stepper_num, 0)
         dpiStepper.setSpeedInRevolutionsPerSecond(stepper_num, 3)
 
