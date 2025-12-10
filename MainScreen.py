@@ -60,9 +60,9 @@ class MainScreen(Screen):
         self.machine.manual_rotate()
 
     def magnet_button(self):
-        if self.ids.magnet.text == "Hold ball"
+        if self.ids.magnet.text == "Hold ball":
             self.ids.magnet.text = "Drop ball"
-        else
+        else:
             self.ids.magnet.text = "Hold ball"
         self.machine.magnet()
 
