@@ -40,8 +40,6 @@ class MainScreen(Screen):
             self.ids.manual_move.fill_color = "turquoise"
 
     def manual_button(self):
-        self.ids.auto_move.disabled = True
-        self.ids.manual_move.disabled = True
         self.button_called = True
         self.update()
         sleep(0.05)
@@ -50,8 +48,6 @@ class MainScreen(Screen):
         self.button_called = False
 
     def start_button(self):
-        self.ids.auto_move.disabled = True
-        self.ids.manual_move.disabled = True
         self.button_called = True
         self.update()
         sleep(0.05)
@@ -64,8 +60,11 @@ class MainScreen(Screen):
         self.machine.manual_rotate()
 
     def magnet_button(self):
+        if self.ids.magnet.text == "Hold ball"
+            self.ids.magnet.text = "Drop ball"
+        else
+            self.ids.magnet.text = "Hold ball"
         self.machine.magnet()
-
 
     def admin_action(self):
         """
