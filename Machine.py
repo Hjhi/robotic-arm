@@ -24,8 +24,8 @@ magnet_servo = 1
 piston_servo = 0
 arm_high = 90
 arm_low = 180
-arm_low_revs = 0.95
-arm_high_revs = 0.5
+arm_high_revs = 0.95
+arm_low_revs = 0.6
 
 #
 # TODO: Replace the placeholders above with your project's actual
@@ -38,6 +38,7 @@ arm_high_revs = 0.5
 class Machine:
 
     piston_high = True
+    magnet_on = False
 
     def __init__(self, **kwargs):
         #TODO: Initialize your hardware interfaces here
@@ -68,12 +69,12 @@ class Machine:
     def auto_move(self):
         self.default_position()
         if not dpiComputer.readDigitalIn(high_pos):
-            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_high_revs, True)
+            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_low_revs, True)
             dpiComputer.writeServo(piston_servo, 100) #lower piston slightly
             dpiComputer.writeServo(magnet_servo, 180) #magnet on
             sleep(1)
             dpiComputer.writeServo(piston_servo, 90) #raise piston
-            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_low_revs, True)
+            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_high_revs, True)
             dpiComputer.writeServo(piston_servo, arm_low)  #lower piston
             sleep(3)
             dpiComputer.writeServo(magnet_servo, 90) #magnet off
@@ -83,13 +84,13 @@ class Machine:
             self.piston_high = False
 
         elif not dpiComputer.readDigitalIn(low_pos):
-            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_low_revs, True)
+            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_high_revs, True)
             dpiComputer.writeServo(piston_servo, arm_low)  # lower piston
             sleep(3)
             dpiComputer.writeServo(magnet_servo, 180)  # magnet on
             sleep(1)
             dpiComputer.writeServo(piston_servo, 90)  # raise piston
-            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_high_revs, True)
+            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_low_revs, True)
             dpiComputer.writeServo(piston_servo, 100)  # slightly lower piston
             dpiComputer.writeServo(magnet_servo, 90)  # magnet off
             sleep(1)
@@ -98,23 +99,40 @@ class Machine:
             self.piston_high = True
 
     def manual_move(self):
-        if self.piston_high:
-            dpiComputer.writeServo(piston_servo, arm_low)
-            self.piston_high = False
+        if dpiStepper.getCurrentPositionInRevolutions(stepper_num) == arm_low_revs:
+            if self.piston_high:
+                dpiComputer.writeServo(piston_servo, arm_low)
+                self.piston_high = False
+            else:
+                dpiComputer.writeServo(piston_servo, arm_high)
+                self.piston_high = True
         else:
-            dpiComputer.writeServo(piston_servo, arm_high)
-            self.piston_high = True
+            if self.piston_high:
+                dpiComputer.writeServo(piston_servo, 100)
+                self.piston_high = False
+            else:
+                dpiComputer.writeServo(piston_servo, arm_high)
+                self.piston_high = True
 
     def manual_rotate(self):
-        if dpiStepper.getCurrentPositionInRevolutions(stepper_num) == arm_high_revs:
-            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_low_revs, True)
-        else:
+        if dpiStepper.getCurrentPositionInRevolutions(stepper_num) == arm_low_revs:
             dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_high_revs, True)
+        else:
+            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_low_revs, True)
+
+    def magnet(self):
+        if self.magnet_on:
+            dpiComputer.writeServo(magnet_servo, 90)  # magnet off
+            self.magnet_on = False
+        else:
+            dpiComputer.writeServo(magnet_servo, 180) #magnet on
+            self.magnet_on = True
 
     def default_position(self):
         dpiComputer.writeServo(piston_servo, 90)
         dpiComputer.writeServo(magnet_servo, 90)
         self.piston_high = True
+        self.magnet_on = False
 
     def startup(self):
         #TODO: Implement startup functionality

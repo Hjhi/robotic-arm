@@ -60,12 +60,11 @@ class MainScreen(Screen):
         self.button_called = False
 
     def manual_rotate_button(self):
-        rotated_up = self.machine.dpiStepper.getCurrentPositionInRevolutions(0) == 0.95
-        if rotated_up:
-            self.ids.rotate.text = "rotate down"
-        else:
-            self.ids.rotate.text = "rotate up"
+        self.rotated_up = not self.rotated_up
         self.machine.manual_rotate()
+
+    def magnet_button(self):
+        pass
 
 
     def admin_action(self):
