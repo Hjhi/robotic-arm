@@ -64,7 +64,7 @@ class MainScreen(Screen):
         self.machine.manual_rotate()
 
     def magnet_button(self):
-        pass
+        self.machine.magnet()
 
 
     def admin_action(self):

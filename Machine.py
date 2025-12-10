@@ -9,7 +9,6 @@
 from dpeaDPi.DPiComputer import DPiComputer
 from dpeaDPi.DPiStepper import *
 from time import sleep
-from kivy.clock import Clock
 
 dpiComputer = DPiComputer()
 dpiStepper = DPiStepper()
@@ -135,7 +134,6 @@ class Machine:
         self.magnet_on = False
 
     def startup(self):
-        #TODO: Implement startup functionality
         self.stepper_startup()
         dpiComputer.writeServo(magnet_servo, 90)
         dpiComputer.writeServo(piston_servo, 90)
