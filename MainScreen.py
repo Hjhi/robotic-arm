@@ -54,6 +54,7 @@ class MainScreen(Screen):
         self.machine.auto_move()
         sleep(1)
         self.button_called = False
+        self.ids.magnet.text = "Hold ball"
 
     def manual_rotate_button(self):
         self.rotated_up = not self.rotated_up
