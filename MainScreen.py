@@ -50,6 +50,9 @@ class MainScreen(Screen):
             self.ids.magnet.text = "Hold ball"
         self.machine.magnet()
 
+    def manual_rotate_slider(self):
+        self.machine.manual_rotate_slider(self.ids.slider.value)
+
     def admin_action(self):
         """
         Hidden admin button touch event. Transitions to passCodeScreen.

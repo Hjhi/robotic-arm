@@ -116,6 +116,10 @@ class Machine:
             dpiComputer.writeServo(magnet_servo, 180) #magnet on
             self.magnet_on = True
 
+    def manual_rotate_slider(self, slider_value):
+        arm_pos = arm_low_revs - (arm_low_revs-arm_high_revs)*slider_value/100
+        dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_pos, True)
+
     def default_position(self):
         dpiComputer.writeServo(piston_servo, 90)
         dpiComputer.writeServo(magnet_servo, 90)

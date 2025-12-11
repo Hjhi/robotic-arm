@@ -49,3 +49,20 @@
         font_size: 30
         bold: True
         on_press: root.magnet_button()
+
+    Slider:
+        id: arm_slider
+        min: 0
+        max: 100
+        step: 0
+        center_x: root.width * 0.5
+        center_y: root.height * 0.2
+        size_hint_x: 0.75
+        size_hint_y: 0.05
+        on_value: root.manual_rotate_slider()
+
+    Label:
+        id: slider_label
+        text: "Arm Position: " + ids.arm_slider.value + "%"
+        center_x: root.width * 0.5
+        center_y: root.height * 0.2
