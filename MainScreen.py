@@ -28,31 +28,16 @@ class MainScreen(Screen):
         Clock.unschedule(self.update)
 
     def update(self, dt=None):
-        if self.button_called:
-            self.ids.auto_move.disabled = True
-            self.ids.manual_move.disabled = True
-            self.ids.auto_move.fill_color = "dimgray"
-            self.ids.manual_move.fill_color = "dimgray"
-        else:
-            self.ids.auto_move.disabled = False
-            self.ids.manual_move.disabled = False
-            self.ids.auto_move.fill_color = "turquoise"
-            self.ids.manual_move.fill_color = "turquoise"
+
 
     def manual_button(self):
         self.button_called = True
-        self.update()
-        sleep(0.05)
         self.machine.manual_move()
-        sleep(1)
         self.button_called = False
 
     def start_button(self):
         self.button_called = True
-        self.update()
-        sleep(0.05)
         self.machine.auto_move()
-        sleep(1)
         self.button_called = False
         self.ids.magnet.text = "Hold ball"
 
