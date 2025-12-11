@@ -24,7 +24,7 @@ piston_servo = 0
 arm_high = 90
 arm_low = 170
 arm_low_revs = 0.85
-arm_high_revs = 0.53
+arm_high_revs = 0.5
 
 #
 # TODO: Replace the placeholders above with your project's actual
@@ -92,23 +92,15 @@ class Machine:
             dpiComputer.writeServo(piston_servo, 90)  # raise piston
 
     def manual_move(self):
-        if dpiStepper.getCurrentPositionInRevolutions(stepper_num) == arm_low_revs:
-            if self.piston_high:
-                dpiComputer.writeServo(piston_servo, arm_low)
-                self.piston_high = False
-            else:
-                dpiComputer.writeServo(piston_servo, arm_high)
-                self.piston_high = True
+        if self.piston_high:
+            dpiComputer.writeServo(piston_servo, arm_low)
+            self.piston_high = False
         else:
-            if self.piston_high:
-                dpiComputer.writeServo(piston_servo, 100)
-                self.piston_high = False
-            else:
-                dpiComputer.writeServo(piston_servo, arm_high)
-                self.piston_high = True
+            dpiComputer.writeServo(piston_servo, arm_high)
+            self.piston_high = True
 
     def manual_rotate(self):
-        if dpiStepper.getCurrentPositionInRevolutions(stepper_num) == arm_low_revs:
+        if dpiStepper.getCurrentPositionInRevolutions(stepper_num) > 0.7:
             dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_high_revs, True)
         else:
             dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_low_revs, True)
