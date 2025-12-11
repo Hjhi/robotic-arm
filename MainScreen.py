@@ -51,7 +51,7 @@ class MainScreen(Screen):
         self.machine.magnet()
 
     def manual_rotate_slider(self):
-        self.machine.manual_rotate_slider(self.ids.slider.value)
+        self.machine.manual_rotate_slider(self.ids.arm_slider.value)
 
     def admin_action(self):
         """

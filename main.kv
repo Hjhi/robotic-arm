@@ -56,13 +56,13 @@
         max: 100
         step: 0
         center_x: root.width * 0.5
-        center_y: root.height * 0.2
+        center_y: root.height * 0.15
         size_hint_x: 0.75
-        size_hint_y: 0.05
+        size_hint_y: 0.01
         on_value: root.manual_rotate_slider()
 
     Label:
         id: slider_label
         text: f"Arm Position: {arm_slider.value}%"
         center_x: root.width * 0.5
-        center_y: root.height * 0.2
+        center_y: root.height * 0.15
