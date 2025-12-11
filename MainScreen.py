@@ -11,7 +11,6 @@ class MainScreen(Screen):
     in other words, the frontend (grr)
     """
     button_called = False
-    rotated_up = False
 
     def __init__(self, machine: Machine, **kwargs):
         super(MainScreen, self).__init__(**kwargs)
@@ -42,7 +41,6 @@ class MainScreen(Screen):
         self.ids.magnet.text = "Hold ball"
 
     def manual_rotate_button(self):
-        self.rotated_up = not self.rotated_up
         self.machine.manual_rotate()
 
     def magnet_button(self):
