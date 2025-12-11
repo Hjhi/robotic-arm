@@ -23,7 +23,7 @@ magnet_servo = 1
 piston_servo = 0
 arm_high = 90
 arm_low = 170
-arm_low_revs = 0.9
+arm_low_revs = 0.85
 arm_high_revs = 0.55
 
 #
