@@ -28,7 +28,7 @@ class MainScreen(Screen):
         Clock.unschedule(self.update)
 
     def update(self, dt=None):
-
+        pass
 
     def manual_button(self):
         self.button_called = True
