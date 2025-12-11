@@ -100,7 +100,7 @@ class Machine:
             self.piston_high = True
 
     def manual_rotate(self):
-        if dpiStepper.getCurrentPositionInRevolutions(stepper_num) > 0.7:
+        if dpiStepper.getCurrentPositionInRevolutions(stepper_num)[1] > 0.7:
             dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_high_revs, True)
         else:
             dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_low_revs, True)
