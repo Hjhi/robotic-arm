@@ -100,7 +100,7 @@ class Machine:
             print("your sensor is not working (yum)")
 
 
-    def move_and_grab(self, grab, high, dt=None):
+    def move_and_grab(self, grab, high):
         if grab:
             magnet_num = 180
         else:
@@ -119,7 +119,7 @@ class Machine:
         dpiComputer.writeServo(magnet_servo, magnet_num)  # magnet on
         dpiComputer.writeServo(piston_servo, 90)  # raise piston
 
-    def delay_fn(self):
+    def delay_fn(self, dt=None):
         print("non-blocking delay finished!")
 
     def manual_move(self):
