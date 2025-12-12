@@ -9,6 +9,7 @@
 from dpeaDPi.DPiComputer import DPiComputer
 from dpeaDPi.DPiStepper import *
 from time import sleep
+from kivy.clock import Clock
 
 dpiComputer = DPiComputer()
 dpiStepper = DPiStepper()
@@ -68,16 +69,20 @@ class Machine:
     def auto_move(self):
         self.default_position()
         if not dpiComputer.readDigitalIn(high_pos):
-            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_high_revs, True)
-            dpiComputer.writeServo(piston_servo, arm_low) #lower piston
-            dpiComputer.writeServo(magnet_servo, 180) #magnet on
-            sleep(1)
-            dpiComputer.writeServo(piston_servo, 90) #raise piston
+            # dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_high_revs, True)
+            # dpiComputer.writeServo(piston_servo, arm_low) #lower piston
+            # dpiComputer.writeServo(magnet_servo, 180) #magnet on
+            # sleep(1)
+            # dpiComputer.writeServo(piston_servo, 90) #raise piston
+            # dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_low_revs, True)
+            # dpiComputer.writeServo(piston_servo, arm_low)  #lower piston
+            # sleep(2.5)
+            # dpiComputer.writeServo(magnet_servo, 90) #magnet off
+            # dpiComputer.writeServo(piston_servo, 90)  # raise piston
+            self.move_and_grab(True, True)
             dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_low_revs, True)
-            dpiComputer.writeServo(piston_servo, arm_low)  #lower piston
-            sleep(2.5)
-            dpiComputer.writeServo(magnet_servo, 90) #magnet off
-            dpiComputer.writeServo(piston_servo, 90)  # raise piston
+            self.move_and_grab(False, False)
+
 
         elif not dpiComputer.readDigitalIn(low_pos):
             print("I acknowledge the existence of your ball at the low end, I simply do not want to move")
@@ -94,7 +99,28 @@ class Machine:
         else:
             print("your sensor is not working (yum)")
 
-        return True
+
+    def move_and_grab(self, grab, high, dt=None):
+        if grab:
+            magnet_num = 180
+        else:
+            magnet_num = 90
+
+        if high:
+            arm_angle = arm_high_revs
+            delay = 2
+        else:
+            arm_angle = arm_low_revs
+            delay = 1
+
+        dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_angle, True)
+        dpiComputer.writeServo(piston_servo, arm_low)  # lower piston
+        Clock.schedule_once(self.delay_fn(), delay)
+        dpiComputer.writeServo(magnet_servo, magnet_num)  # magnet on
+        dpiComputer.writeServo(piston_servo, 90)  # raise piston
+
+    def delay_fn(self):
+        print("non-blocking delay finished!")
 
     def manual_move(self):
         if self.piston_high:
