@@ -30,15 +30,15 @@ class MainScreen(Screen):
         pass
 
     def manual_button(self):
-        self.button_called = True
         self.machine.manual_move()
-        self.button_called = False
 
     def start_button(self):
-        self.button_called = True
+        self.disable_buttons()
+        self.ids.auto_move.text = "Moving ball..."
         self.machine.auto_move()
-        self.button_called = False
+        self.ids.auto_move.text = "Start"
         self.ids.magnet.text = "Hold ball"
+        self.enable_buttons()
 
     def manual_rotate_button(self):
         self.machine.manual_rotate()
@@ -52,6 +52,12 @@ class MainScreen(Screen):
 
     def manual_rotate_slider(self):
         self.machine.manual_rotate_slider(self.ids.arm_slider.value)
+
+    def disable_buttons(self):
+        self.ids.auto_move.disabled = True
+
+    def enable_buttons(self):
+        self.ids.auto_move.disabled = False
 
     def admin_action(self):
         """
