@@ -108,19 +108,18 @@ class Machine:
 
         if high:
             arm_angle = arm_high_revs
-            delay = 2
+            delay = 2.5
         else:
             arm_angle = arm_low_revs
             delay = 1
 
         dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_angle, True)
         dpiComputer.writeServo(piston_servo, arm_low)  # lower piston
-        Clock.schedule_once(self.delay_fn, delay)
+        Clock.schedule_once(self.delay_fn(magnet_num), delay)
+
+    def delay_fn(self, magnet_num, dt=None):
         dpiComputer.writeServo(magnet_servo, magnet_num)  # magnet on
         dpiComputer.writeServo(piston_servo, 90)  # raise piston
-
-    def delay_fn(self, dt=None):
-        print("non-blocking delay finished!")
 
     def manual_move(self):
         if self.piston_high:
