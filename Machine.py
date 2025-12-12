@@ -94,6 +94,8 @@ class Machine:
         else:
             print("your sensor is not working (yum)")
 
+        return True
+
     def manual_move(self):
         if self.piston_high:
             dpiComputer.writeServo(piston_servo, arm_low)
@@ -101,12 +103,14 @@ class Machine:
         else:
             dpiComputer.writeServo(piston_servo, arm_high)
             self.piston_high = True
+        return True
 
     def manual_rotate(self):
         if dpiStepper.getCurrentPositionInRevolutions(stepper_num)[1] > 0.7:
             dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_high_revs, True)
         else:
             dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_low_revs, True)
+        return True
 
     def magnet(self):
         if self.magnet_on:
@@ -115,10 +119,12 @@ class Machine:
         else:
             dpiComputer.writeServo(magnet_servo, 180) #magnet on
             self.magnet_on = True
+        return True
 
     def manual_rotate_slider(self, slider_value):
         arm_pos = arm_low_revs - (arm_low_revs-arm_high_revs)*slider_value/100
         dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_pos, True)
+        return True
 
     def default_position(self):
         dpiComputer.writeServo(piston_servo, 90)
