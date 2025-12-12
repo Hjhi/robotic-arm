@@ -115,7 +115,7 @@ class Machine:
 
         dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_angle, True)
         dpiComputer.writeServo(piston_servo, arm_low)  # lower piston
-        Clock.schedule_once(self.delay_fn(), delay)
+        Clock.schedule_once(self.delay_fn, delay)
         dpiComputer.writeServo(magnet_servo, magnet_num)  # magnet on
         dpiComputer.writeServo(piston_servo, 90)  # raise piston
 
