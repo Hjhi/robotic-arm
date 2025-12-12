@@ -54,9 +54,11 @@ class MainScreen(Screen):
         self.machine.manual_rotate_slider(self.ids.arm_slider.value)
 
     def disable_buttons(self):
+        print("auto disabled")
         self.ids.auto_move.disabled = True
 
     def enable_buttons(self):
+        print("auto enabled")
         self.ids.auto_move.disabled = False
 
     def admin_action(self):
