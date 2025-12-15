@@ -33,7 +33,7 @@ class MainScreen(Screen):
         self.machine.manual_move()
 
     def start_button(self):
-        self.ids.auto_move.disabled = True
+        self.disable_buttons()
         self.ids.auto_move.text = "Moving ball..."
         self.machine.auto_move()
         self.ids.auto_move.text = "Start"
