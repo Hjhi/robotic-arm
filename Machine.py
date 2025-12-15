@@ -67,39 +67,39 @@ class Machine:
         dpiStepper.setCurrentPositionInSteps(stepper_num, 0)
         dpiStepper.setSpeedInRevolutionsPerSecond(stepper_num, 3)
 
-    def auto_move(self):
+    def auto_move(self, dt=None):
         self.default_position()
         if not dpiComputer.readDigitalIn(high_pos):
-            # dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_high_revs, True)
-            # dpiComputer.writeServo(piston_servo, arm_low) #lower piston
-            # dpiComputer.writeServo(magnet_servo, 180) #magnet on
-            # sleep(1)
-            # dpiComputer.writeServo(piston_servo, 90) #raise piston
-            # dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_low_revs, True)
-            # dpiComputer.writeServo(piston_servo, arm_low)  #lower piston
-            # sleep(2.5)
-            # dpiComputer.writeServo(magnet_servo, 90) #magnet off
-            # dpiComputer.writeServo(piston_servo, 90)  # raise piston
-            Clock.schedule_once(partial(self.move_and_grab,True, True),0)
-            Clock.schedule_once(partial(self.move, arm_low_revs), 5)
-            Clock.schedule_once(partial(self.move_and_grab,False, False), 10)
+            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_high_revs, True)
+            dpiComputer.writeServo(piston_servo, arm_low) #lower piston
+            dpiComputer.writeServo(magnet_servo, 180) #magnet on
+            sleep(1)
+            dpiComputer.writeServo(piston_servo, 90) #raise piston
+            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_low_revs, True)
+            dpiComputer.writeServo(piston_servo, arm_low)  #lower piston
+            sleep(2.5)
+            dpiComputer.writeServo(magnet_servo, 90) #magnet off
+            dpiComputer.writeServo(piston_servo, 90)  # raise piston
+            # Clock.schedule_once(partial(self.move_and_grab,True, True),0)
+            # Clock.schedule_once(partial(self.move, arm_low_revs), 5)
+            # Clock.schedule_once(partial(self.move_and_grab,False, False), 10)
 
 
         elif not dpiComputer.readDigitalIn(low_pos):
-            # print("I acknowledge the existence of your ball at the low end, I simply do not want to move")
-            # dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_low_revs, True)
-            # dpiComputer.writeServo(piston_servo, arm_low)  # lower piston
-            # sleep(2.5)
-            # dpiComputer.writeServo(magnet_servo, 180)  # magnet on
-            # dpiComputer.writeServo(piston_servo, 90)  # raise piston
-            # dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_high_revs, True)
-            # dpiComputer.writeServo(piston_servo, arm_low)  #  lower piston
-            # sleep(1)
-            # dpiComputer.writeServo(magnet_servo, 90)  # magnet off
-            # dpiComputer.writeServo(piston_servo, 90)  # raise piston
-            Clock.schedule_once(partial(self.move_and_grab,True, False),0)
-            Clock.schedule_once(partial(self.move, arm_high_revs), 5)
-            Clock.schedule_once(partial(self.move_and_grab,False, True), 10)
+            print("I acknowledge the existence of your ball at the low end, I simply do not want to move")
+            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_low_revs, True)
+            dpiComputer.writeServo(piston_servo, arm_low)  # lower piston
+            sleep(2.5)
+            dpiComputer.writeServo(magnet_servo, 180)  # magnet on
+            dpiComputer.writeServo(piston_servo, 90)  # raise piston
+            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_high_revs, True)
+            dpiComputer.writeServo(piston_servo, arm_low)  #  lower piston
+            sleep(1)
+            dpiComputer.writeServo(magnet_servo, 90)  # magnet off
+            dpiComputer.writeServo(piston_servo, 90)  # raise piston
+            # Clock.schedule_once(partial(self.move_and_grab,True, False),0)
+            # Clock.schedule_once(partial(self.move, arm_high_revs), 5)
+            # Clock.schedule_once(partial(self.move_and_grab,False, True), 10)
 
         else:
             print("your sensor is not working (yum)")
