@@ -10,6 +10,7 @@ from dpeaDPi.DPiComputer import DPiComputer
 from dpeaDPi.DPiStepper import *
 from time import sleep
 from kivy.clock import Clock
+from functools import partial
 
 dpiComputer = DPiComputer()
 dpiStepper = DPiStepper()
@@ -79,9 +80,9 @@ class Machine:
             # sleep(2.5)
             # dpiComputer.writeServo(magnet_servo, 90) #magnet off
             # dpiComputer.writeServo(piston_servo, 90)  # raise piston
-            Clock.schedule_once(self.move_and_grab(True, True))
-            Clock.schedule_once(self.move(arm_low_revs), 2)
-            Clock.schedule_once(self.move_and_grab(False, False), 5)
+            Clock.schedule_once(partial(self.move_and_grab,True, True),0)
+            Clock.schedule_once(partial(self.move, arm_low_revs), 2)
+            Clock.schedule_once(partial(self.move_and_grab,False, False), 5)
 
 
         elif not dpiComputer.readDigitalIn(low_pos):
