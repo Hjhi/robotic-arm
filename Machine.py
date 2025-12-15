@@ -98,7 +98,7 @@ class Machine:
             # dpiComputer.writeServo(magnet_servo, 90)  # magnet off
             # dpiComputer.writeServo(piston_servo, 90)  # raise piston
             Clock.schedule_once(partial(self.move_and_grab,True, False),0)
-            Clock.schedule_once(partial(self.move, arm_high_revs), 3)
+            Clock.schedule_once(partial(self.move, arm_high_revs), 5)
             Clock.schedule_once(partial(self.move_and_grab,False, True), 7)
 
         else:
@@ -124,11 +124,13 @@ class Machine:
 
     def grab(self, magnet_num, dt=None):
         dpiComputer.writeServo(magnet_servo, magnet_num)  # magnet on
-        dpiComputer.writeServo(piston_servo, 90)  # raise piston
+        Clock.schedule_once(self.arm_raise, 1)
 
     def move(self, pos, dt=None):
         dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, pos, True)
 
+    def arm_raise(self, dt=None):
+        dpiComputer.writeServo(piston_servo, 90)  # raise piston
 
     def manual_move(self):
         if self.piston_high:
