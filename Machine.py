@@ -113,10 +113,10 @@ class Machine:
 
         if high:
             arm_angle = arm_high_revs
-            delay = 3
+            delay = 1
         else:
             arm_angle = arm_low_revs
-            delay = 1
+            delay = 3
 
         dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_angle, True)
         dpiComputer.writeServo(piston_servo, arm_low)  # lower piston
