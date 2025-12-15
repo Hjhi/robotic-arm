@@ -35,7 +35,7 @@ class MainScreen(Screen):
     def start_button(self):
         self.disable_buttons()
         self.ids.auto_move.text = "Moving ball..."
-        Clock.schedule_once(self.machine.auto_move(), 1)
+        Clock.schedule_once(self.machine.auto_move, 1)
         self.ids.auto_move.text = "Start"
         self.ids.magnet.text = "Hold ball"
         self.enable_buttons()
