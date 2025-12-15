@@ -113,7 +113,7 @@ class Machine:
 
         if high:
             arm_angle = arm_high_revs
-            delay = 2.5
+            delay = 3
         else:
             arm_angle = arm_low_revs
             delay = 1
