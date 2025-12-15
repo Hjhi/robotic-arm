@@ -81,23 +81,22 @@ class Machine:
             # dpiComputer.writeServo(magnet_servo, 90) #magnet off
             # dpiComputer.writeServo(piston_servo, 90)  # raise piston
             Clock.schedule_once(partial(self.move_and_grab,True, True),0)
-            Clock.schedule_once(partial(self.move, arm_low_revs), 2)
-            Clock.schedule_once(partial(self.move_and_grab,False, False), 5)
+            Clock.schedule_once(partial(self.move, arm_low_revs), 5)
+            Clock.schedule_once(partial(self.move_and_grab,False, False), 10)
 
 
         elif not dpiComputer.readDigitalIn(low_pos):
-            # print("I acknowledge the existence of your ball at the low end, I simply do not want to move")
-            # dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_low_revs, True)
-            # dpiComputer.writeServo(piston_servo, arm_low)  # lower piston
-            # sleep(2.5)
-            # dpiComputer.writeServo(magnet_servo, 180)  # magnet on
-            # dpiComputer.writeServo(piston_servo, 90)  # raise piston
-            # dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_high_revs, True)
-            # dpiComputer.writeServo(piston_servo, arm_low)  #  lower piston
-            # sleep(1)
-            # dpiComputer.writeServo(magnet_servo, 90)  # magnet off
-            # dpiComputer.writeServo(piston_servo, 90)  # raise piston
-            pass
+            print("I acknowledge the existence of your ball at the low end, I simply do not want to move")
+            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_low_revs, True)
+            dpiComputer.writeServo(piston_servo, arm_low)  # lower piston
+            sleep(2.5)
+            dpiComputer.writeServo(magnet_servo, 180)  # magnet on
+            dpiComputer.writeServo(piston_servo, 90)  # raise piston
+            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_high_revs, True)
+            dpiComputer.writeServo(piston_servo, arm_low)  #  lower piston
+            sleep(1)
+            dpiComputer.writeServo(magnet_servo, 90)  # magnet off
+            dpiComputer.writeServo(piston_servo, 90)  # raise piston
         else:
             print("your sensor is not working (yum)")
 
