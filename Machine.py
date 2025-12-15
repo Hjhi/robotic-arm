@@ -79,9 +79,9 @@ class Machine:
             # sleep(2.5)
             # dpiComputer.writeServo(magnet_servo, 90) #magnet off
             # dpiComputer.writeServo(piston_servo, 90)  # raise piston
-            self.move_and_grab(True, True)
-            dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_low_revs, True)
-            self.move_and_grab(False, False)
+            Clock.schedule_once(self.move_and_grab(True, True))
+            Clock.schedule_once(self.move(arm_low_revs), 2)
+            Clock.schedule_once(self.move_and_grab(False, False), 5)
 
 
         elif not dpiComputer.readDigitalIn(low_pos):
@@ -101,7 +101,7 @@ class Machine:
             print("your sensor is not working (yum)")
 
 
-    def move_and_grab(self, grab, high):
+    def move_and_grab(self, grab, high, dt=None):
         if grab:
             magnet_num = 180
         else:
@@ -116,11 +116,15 @@ class Machine:
 
         dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, arm_angle, True)
         dpiComputer.writeServo(piston_servo, arm_low)  # lower piston
-        Clock.schedule_once(self.delay_fn(magnet_num), delay)
+        Clock.schedule_once(self.grab(magnet_num), delay)
 
-    def delay_fn(self, magnet_num, dt=None):
+    def grab(self, magnet_num, dt=None):
         dpiComputer.writeServo(magnet_servo, magnet_num)  # magnet on
         dpiComputer.writeServo(piston_servo, 90)  # raise piston
+
+    def move(self, pos, dt=None):
+        dpiStepper.moveToAbsolutePositionInRevolutions(stepper_num, pos, True)
+
 
     def manual_move(self):
         if self.piston_high:
