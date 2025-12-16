@@ -82,7 +82,7 @@ class Machine:
             # dpiComputer.writeServo(piston_servo, 90)  # raise piston
             Clock.schedule_once(partial(self.move_and_grab,True, True),0)
             Clock.schedule_once(partial(self.move, arm_low_revs), 5)
-            Clock.schedule_once(partial(self.move_and_grab,False, False), 8)
+            Clock.schedule_once(partial(self.move_and_grab,False, False), 7)
 
 
         elif not dpiComputer.readDigitalIn(low_pos):
@@ -99,7 +99,7 @@ class Machine:
             # dpiComputer.writeServo(piston_servo, 90)  # raise piston
             Clock.schedule_once(partial(self.move_and_grab,True, False),0)
             Clock.schedule_once(partial(self.move, arm_high_revs), 7)
-            Clock.schedule_once(partial(self.move_and_grab,False, True), 10)
+            Clock.schedule_once(partial(self.move_and_grab,False, True), 9)
 
         else:
             print("your sensor is not working (yum)")
