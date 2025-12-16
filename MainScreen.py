@@ -1,4 +1,4 @@
-from kivy.clock import Clock
+from kivy.clock import Clock, mainthread
 from kivy.uix.screenmanager import Screen
 import threading
 
@@ -27,6 +27,7 @@ class MainScreen(Screen):
         print("left main screen")
         Clock.unschedule(self.update)
 
+    @mainthread
     def update(self, dt=None):
         if self.button_called:
             self.ids.auto_move.disabled = True
