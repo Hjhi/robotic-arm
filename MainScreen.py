@@ -21,7 +21,7 @@ class MainScreen(Screen):
 
     def on_enter(self, *args):
         print("entered main screen")
-        Clock.schedule_interval(self.update, 0.01)
+        Clock.schedule_interval(self.update, 0.05)
 
     def on_leave(self, *args):
         print("left main screen")
@@ -42,6 +42,7 @@ class MainScreen(Screen):
         self.button_called = True
         automatic_thread = threading.Thread(target=self.machine.auto_move)
         automatic_thread.start()
+        automatic_thread.join()
         self.button_called = False
         # self.machine.auto_move()
         # self.ids.auto_move.text = "Start"
