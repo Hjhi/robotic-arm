@@ -34,7 +34,8 @@ class MainScreen(Screen):
 
     def start_button(self):
         self.ids.auto_move.disabled = True
-        sleep(5)
+        if self.ids.auto_move.disabled:
+            print("disabled")
         self.ids.auto_move.text = "Moving ball..."
         self.machine.auto_move()
         self.ids.auto_move.text = "Start"
