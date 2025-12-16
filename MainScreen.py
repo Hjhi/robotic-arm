@@ -38,7 +38,7 @@ class MainScreen(Screen):
         self.machine.auto_move()
         self.ids.auto_move.text = "Start"
         self.ids.magnet.text = "Hold ball"
-        self.enable_buttons()
+        self.ids.auto_move.disabled = False
 
     def manual_rotate_button(self):
         self.machine.manual_rotate()
