@@ -1,5 +1,6 @@
 from kivy.clock import Clock
 from kivy.uix.screenmanager import Screen
+import threading
 
 from time import sleep
 
@@ -39,7 +40,8 @@ class MainScreen(Screen):
 
     def start_button(self):
         self.button_called = True
-        sleep(3)
+        automatic_thread = threading.Thread(target=self.machine.auto_move)
+        automatic_thread.start()
         self.button_called = False
         # self.machine.auto_move()
         # self.ids.auto_move.text = "Start"
