@@ -27,20 +27,21 @@ class MainScreen(Screen):
         Clock.unschedule(self.update)
 
     def update(self, dt=None):
-        pass
+        if self.button_called:
+            self.ids.auto_move.disabled = True
+            self.ids.auto_move.text = "Moving ball..."
+        else:
+            self.ids.auto_move.disabled = False
 
     def manual_button(self):
         self.machine.manual_move()
 
     def start_button(self):
-        self.ids.auto_move.disabled = True
-        if self.ids.auto_move.disabled:
-            print("disabled")
-        self.ids.auto_move.text = "Moving ball..."
+        self.button_called = True
         self.machine.auto_move()
         self.ids.auto_move.text = "Start"
         self.ids.magnet.text = "Hold ball"
-        self.ids.auto_move.disabled = False
+        self.button_called = False
 
     def manual_rotate_button(self):
         self.machine.manual_rotate()
