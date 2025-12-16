@@ -43,7 +43,7 @@ class MainScreen(Screen):
         self.button_called = True
         automatic_thread = threading.Thread(target=self.test)
         automatic_thread.start()
-        Clock.schedule_once(self.enable_buttons, 2)
+        Clock.schedule_once(self.enable_buttons, 7)
         #automatic_thread.start()
         #automatic_thread.join()
         # self.machine.auto_move()
