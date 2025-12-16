@@ -38,7 +38,7 @@ class MainScreen(Screen):
         self.machine.manual_move()
 
     def start_button(self):
-        self.button_called = not self.button_called
+        self.button_called = True
         sleep(3)
         self.button_called = False
         # self.machine.auto_move()
