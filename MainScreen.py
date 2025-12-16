@@ -32,12 +32,15 @@ class MainScreen(Screen):
             self.ids.auto_move.text = "Moving ball..."
         else:
             self.ids.auto_move.disabled = False
+            self.ids.auto_move.text = "Start"
 
     def manual_button(self):
         self.machine.manual_move()
 
     def start_button(self):
         self.button_called = not self.button_called
+        sleep(3)
+        self.button_called = False
         # self.machine.auto_move()
         # self.ids.auto_move.text = "Start"
         # self.ids.magnet.text = "Hold ball"
