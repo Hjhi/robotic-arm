@@ -20,7 +20,7 @@ class MainScreen(Screen):
 
     def on_enter(self, *args):
         print("entered main screen")
-        Clock.schedule_interval(self.update, 0.05)
+        Clock.schedule_interval(self.update, 0.01)
 
     def on_leave(self, *args):
         print("left main screen")
@@ -37,11 +37,11 @@ class MainScreen(Screen):
         self.machine.manual_move()
 
     def start_button(self):
-        self.button_called = True
-        self.machine.auto_move()
-        self.ids.auto_move.text = "Start"
-        self.ids.magnet.text = "Hold ball"
-        self.button_called = False
+        self.button_called = not self.button_called
+        # self.machine.auto_move()
+        # self.ids.auto_move.text = "Start"
+        # self.ids.magnet.text = "Hold ball"
+        # self.button_called = False
 
     def manual_rotate_button(self):
         self.machine.manual_rotate()
