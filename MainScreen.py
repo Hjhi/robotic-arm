@@ -41,14 +41,19 @@ class MainScreen(Screen):
 
     def start_button(self):
         self.button_called = True
-        automatic_thread = threading.Thread(target=self.machine.auto_move)
+        automatic_thread = threading.Thread(target=self.test)
         automatic_thread.start()
-        automatic_thread.join()
-        self.button_called = False
+        #automatic_thread.start()
+        #automatic_thread.join()
+        if not automatic_thread.is_alive():
+            self.button_called = False
         # self.machine.auto_move()
         # self.ids.auto_move.text = "Start"
         # self.ids.magnet.text = "Hold ball"
         # self.button_called = False
+
+    def test(self):
+        sleep(2)
 
     def manual_rotate_button(self):
         self.machine.manual_rotate()
