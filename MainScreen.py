@@ -73,8 +73,9 @@ class MainScreen(Screen):
 
     def enable_buttons(self, dt=None):
         print("auto enabled")
-        self.ids.auto_move.disabled = False
-        self.ids.auto_move.text = "Start"
+        self.button_called = False
+        # self.ids.auto_move.disabled = False
+        # self.ids.auto_move.text = "Start"
 
     def admin_action(self):
         """
