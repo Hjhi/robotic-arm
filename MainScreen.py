@@ -43,7 +43,7 @@ class MainScreen(Screen):
         self.button_called = True
         automatic_thread = threading.Thread(target=self.test)
         automatic_thread.start()
-        Clock.schedule_once(self.enable_buttons, 10)
+        Clock.schedule_once(self.enable_buttons, 2)
         #automatic_thread.start()
         #automatic_thread.join()
         # self.machine.auto_move()
@@ -74,6 +74,7 @@ class MainScreen(Screen):
     def enable_buttons(self, dt=None):
         print("auto enabled")
         self.ids.auto_move.disabled = False
+        self.ids.auto_move.text = "Start"
 
     def admin_action(self):
         """
