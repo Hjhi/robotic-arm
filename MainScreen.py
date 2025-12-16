@@ -52,7 +52,7 @@ class MainScreen(Screen):
         # self.button_called = False
 
     def test(self):
-        sleep(2)
+        self.machine.auto_move()
 
     def manual_rotate_button(self):
         self.machine.manual_rotate()
